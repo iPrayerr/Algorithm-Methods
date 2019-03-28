@@ -1,7 +1,9 @@
 /*
-	insert sort
-	 - ´ÓµÚ¶ş¸öÔªËØ×÷Îª³ö·¢µã£¬ÌáÈ¡³ö·¢µãÔªËØ×÷Îªkey, ÆäÖ®Ç°ÔªËØ²»Í£Óëkey±È½Ï£¬±ÈËü´ó£¬ÔòºóÒÆÒ»Î»
-    -> Èç´ËÖ¸ÕëÒÆ¶¯µ½²åÈëÎ»Ö®Ç°µÄÎ»ÖÃ£¬Áî²åÈëÎ»ÔªËØµÈÓÚkey, ÅÅĞòÍê³É 
+	Insert Sort
+	1. Set the second element as key
+	2. compare with previous elements one by one, if larger, move it a step behind
+	3. if smaller, the current progress exits, and the key is inserted in the blank area due to moving
+	4. repeat until all the elements in the array(except the first one) are sorted
 */
 
 #include <iostream>
@@ -9,7 +11,7 @@
 using namespace std;
 
 int main() {
-	//ÔªËØ¸öÊı 
+	//å…ƒç´ ä¸ªæ•° 
 	int n;
 	cin >> n;
 	
@@ -25,8 +27,8 @@ int main() {
 		for(j=i-1;j>=0;j--) {
 			if(a[j]>key)
 				a[j+1] = a[j];
-			else break;			//Èôa[j]²»ÔÙ´óÓÚkey£¬ÔòËµÃ÷ËùÓĞ±Èkey´óµÄÔªËØ¶¼ÔÚKeyºóÃæ£¬·´Ö®ÒàÈ»£»¹ÊÍ£Ö¹±éÀú
-								//´ËÊ±²úÉúÒ»¸ö±éÀú´ÎÊı 
+			else break;			//è‹¥a[j]ä¸å†å¤§äºkeyï¼Œåˆ™è¯´æ˜æ‰€æœ‰æ¯”keyå¤§çš„å…ƒç´ éƒ½åœ¨Keyåé¢ï¼Œåä¹‹äº¦ç„¶ï¼›æ•…åœæ­¢éå†
+								//æ­¤æ—¶äº§ç”Ÿä¸€ä¸ªéå†æ¬¡æ•° 
 		}
 		a[j+1] = key;	
 	}
@@ -35,4 +37,4 @@ int main() {
 		cout << a[i] << " ";
 		
 	return 0;
-}//Ê±¼ä¸´ÔÓ¶È£ºo(n^2) 
+} 
