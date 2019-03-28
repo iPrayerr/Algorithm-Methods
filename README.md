@@ -1,4 +1,4 @@
-# Sort Methods
+# Algorithm Methods
 
 New for algorithms, trying to transform what I've learned into C++ codes.
 
