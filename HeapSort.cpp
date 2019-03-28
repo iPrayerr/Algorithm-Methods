@@ -1,12 +1,12 @@
 /*
 	heap sort:
-	1. �����鰴�նѵĶ��彨����ȫ������
-	2. ����������һ�ε�������ɴ󶥶�
-	3. ���󶥶ѵĸ������һ����Ҷ���������޳����������Ҷ
-	4. �ظ�23��ֱ������Ԫ�ر��޳�����õ�sorted array 
+	1. 对数组按照堆的定义建立完全二叉树
+	2. 将二叉树作一次调整，变成大顶堆
+	3. 将大顶堆的根和最后一个树叶交换，并剔除交换后的树叶
+	4. 重复23，直至所有元素被剔除，则得到sorted array 
 */
-//���ĺ��ģ�recurrence 
-//��������Ϊn������α�������nΪ�˹��趨
+//树的核心：recurrence 
+//测试数据为n个无序伪随机数，n为人工设定
  
 #include <iostream>
 #include <stdlib.h>
@@ -53,12 +53,12 @@ void Heap_Sort(){
 void CreateTree(BTree* &b,int i){ 
 	if(i<=n){
 		b = new BTree;
-		BTree* pos;		pos = bt;	//Ѱ�Ҹ��ڵ� 
+		BTree* pos;		pos = bt;	//寻找父节点 
 		
 		int temp = i;
 		if(i>3){
-			vector<int> mov;		//�켣�㷨�����ڶѹ�������ȫ��������������i����ģ2�õ�����Ĳ��ҹ켣
-									//0����ǰ������Ϊ���ӣ�1����ǰ������Ϊ�Һ��� 
+			vector<int> mov;		//轨迹算法：对于堆构建的完全二叉树，可以用i不断模2得到逆序的查找轨迹
+									//0：当前查找中为左孩子；1：当前查找中为右孩子 
 			while(temp>1){
 				mov.push_back(temp%2);
 				temp/=2;
@@ -80,40 +80,40 @@ void CreateTree(BTree* &b,int i){
 		b = NULL;
 }
 
-bool fin = true;			//������ɱ�־ 
-void Big_Heap(BTree* &b){	//�󶥶�Ӧ�ô������ϵ� 
-							//����NULL, �Һ��ӱض�NULL 
-	int temp;			//����ֵ�������м����
+bool fin = true;			//调整完成标志 
+void Big_Heap(BTree* &b){	//大顶堆应该从下往上调 
+							//左孩子NULL, 右孩子必定NULL 
+	int temp;			//两数值交换的中间变量
 	if((b->left)!=NULL)
 		Big_Heap(b->left);
 	//compare
-	if((b->parent->left)==b&&(b->parent->right)!=NULL){		//���������Һ��Ӳ�Ϊ�� 
+	if((b->parent->left)==b&&(b->parent->right)!=NULL){		//是左孩子且右孩子不为空 
 		if((b->value)>(b->parent->right->value)&&(b->value)>(b->parent->value)){
 			temp = b->parent->value;
 			b->parent->value = b->value;
 			b->value = temp;
 			fin = false;
-		}//���ӵ�swap 
+		}//左孩子的swap 
 		else if((b->value)<=(b->parent->right->value)&&(b->parent->right->value)>(b->parent->value)){
 			temp = b->parent->value;
 			b->parent->value = b->parent->right->value;
 			b->parent->right->value = temp;
 			fin = false;
-		}//�Һ��ӵ�swap
+		}//右孩子的swap
 	}
-	else if((b->parent->right)==b&&(b->parent->left)!=NULL){	//���Һ��������Ӳ�Ϊ�� 
+	else if((b->parent->right)==b&&(b->parent->left)!=NULL){	//是右孩子且左孩子不为空 
 		if((b->value)>(b->parent->left->value)&&(b->value)>(b->parent->value)){
 			temp = b->parent->value;
 			b->parent->value = b->value;
 			b->value = temp;
 			fin = false;
-		}//���ӵ�swap 
+		}//左孩子的swap 
 		else if((b->value)<=(b->parent->left->value)&&(b->parent->left->value)>(b->parent->value)){
 				temp = b->parent->value;
 				b->parent->value = b->parent->left->value;
 				b->parent->left->value = temp;
 				fin = false;
-		}//�Һ��ӵ�swap
+		}//右孩子的swap
 	}
 	else if((b->parent->left)==NULL||(b->parent->right)==NULL){
 		if((b->value)>(b->parent->value)){
@@ -121,7 +121,7 @@ void Big_Heap(BTree* &b){	//�󶥶�Ӧ�ô������ϵ�
 			b->parent->value = b->value;
 			b->value = temp;
 			fin = false;
-		}//���ӵ�swap
+		}
 	}
 	if(b->right!=NULL)
 		Big_Heap(b->right);
@@ -143,10 +143,10 @@ void Exchange(int length) {
 	
 	//seek: 0 to left 
 	BTree *pos;	pos = bt;
-	int signal;						//��ʾ���һ���ڵ����丸�ڵ������or�Һ��� 
+	int signal;						//表示最后一个节点是其父节点的左孩子or右孩子 
 	for(int j=mov.size()-1;j>=0;j--){
 		if(j==0)
-			signal = mov[j];		//��¼���һ��ת�䷽�� 
+			signal = mov[j];		//记录最后一次转弯方向 
 		if(!mov[j])
 			pos = pos->left;
 		else
@@ -164,7 +164,7 @@ void Exchange(int length) {
 		pos->left = NULL;
 	else
 		pos->right = NULL;
-	a[length-1] = swap;				//δ�������ֵ���ĩβ������� 
+	a[length-1] = swap;				//未处理部分的最末尾存最大数 
 	
 	//next recurrence
 	if(length>1){
