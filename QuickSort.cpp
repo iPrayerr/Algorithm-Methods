@@ -2,8 +2,7 @@
 	QuickSort:
 	1. select a pivot
 	2. add two pointers(i,j), which j is in front of i
-	3. a[j]<=pivot, i +=1, exchange a[i] <-> a[j]
-	基本思想：每次选择一个基准数将 
+	3. a[j]<=pivot, i +=1, exchange a[i] <-> a[j] 
 */
 
 #include <iostream>
@@ -39,11 +38,11 @@ int main(){
 
 void QuickSort(int n){
 	int pos[2];
-	pos[0] = 0;	pos[1] = n-1;					//p和r 
+	pos[0] = 0;	pos[1] = n-1;					//p鍜宺 
 
 	Partition(pos);
 }
-void Partition(int pos[]){						//如果要用randomized partition, 则也需要将随机位置的pivot换到队尾，然后仍然沿用本算法
+void Partition(int pos[]){						//濡傛灉瑕佺敤randomized partition, 鍒欎篃闇�瑕佸皢闅忔満浣嶇疆鐨刾ivot鎹㈠埌闃熷熬锛岀劧鍚庝粛鐒舵部鐢ㄦ湰绠楁硶
 	//randomly select pivot
 	int ran = pos[0]+(rand()%(pos[1]-pos[0]+1));
 	int temp = a[ran];
