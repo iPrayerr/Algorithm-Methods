@@ -1,8 +1,8 @@
 /*
 	Bucket Sort:
-	1. 建立以vector为元素的vector
-	2. 将[0,1)范围内的数按第一位映射进每个bucket vector
-	3. 对每个bucket排序
+	1. 寤虹珛浠ector涓哄厓绱犵殑vector
+	2. 灏哰0,1)鑼冨洿鍐呯殑鏁版寜绗竴浣嶆槧灏勮繘姣忎釜bucket vector
+	3. 瀵规瘡涓猙ucket鎺掑簭
 	4. comcat directly 
 */
 
@@ -29,8 +29,8 @@ int main(){
 	//drop elements into buckets
 	vector<float> a;
 	for(int i=0;i<n;i++){
-		a.push_back(rand()%1000/(float)1000);			//初始化数组元素只能用push_back()不能用下标赋值，否则爆栈
-														//生成(0,1)范围内n位小数，则采用rand()%2^n/(float)2^n实现 
+		a.push_back(rand()%1000/(float)1000);
+														//鐢熸垚(0,1)鑼冨洿鍐卬浣嶅皬鏁帮紝鍒欓噰鐢╮and()%2^n/(float)2^n瀹炵幇 
 		cout << a[i] << " ";
 		int temp = a[i]*10;		//decide which bucket to put in
 		buckets[temp].push_back(a[i]);
