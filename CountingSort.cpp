@@ -31,7 +31,7 @@ int main() {
 	} cout << endl;
 	
 	int c[largest+1];
-	for(int i=0;i<largest+1;i++)	c[i] = 0; 		//£¡£¡£¡ 
+	for(int i=0;i<largest+1;i++)	c[i] = 0; 
 	Counting_Sort(a,b,c,n,largest+1);
 	
 	for(int i=0;i<n;i++)
